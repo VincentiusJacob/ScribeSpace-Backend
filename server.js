@@ -11,10 +11,10 @@ const app = express();
 // Middleware untuk menangani CORS
 app.use(
   cors({
-    origin: "https://scribe-space-frontend.vercel.app", // Pastikan domain frontend benar
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Menyertakan OPTIONS dalam methods
-    allowedHeaders: ["Content-Type", "Authorization"], // Menyertakan headers yang diperlukan
-    credentials: true, // Jika menggunakan cookies atau token dalam header
+    origin: "https://scribe-space-frontend.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
   })
 );
 
