@@ -1,7 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import supabase from "../supabaseClient.js";
 
-// Create User
 const createUser = async (username, email, hashedPassword) => {
   const userId = uuidv4();
   const createdAt = new Date();
@@ -19,7 +18,7 @@ const createUser = async (username, email, hashedPassword) => {
         updated_at: updatedAt,
       },
     ])
-    .single(); // `.single()` to return a single row of data
+    .single();
 
   if (error) {
     throw error;
@@ -28,13 +27,12 @@ const createUser = async (username, email, hashedPassword) => {
   return data;
 };
 
-// Find User by Email
 const findUserByEmail = async (email) => {
   const { data, error } = await supabase
     .from("users")
     .select("*")
     .eq("email", email)
-    .single(); // `.single()` returns a single result or null
+    .single();
 
   if (error) {
     throw error;
@@ -43,13 +41,12 @@ const findUserByEmail = async (email) => {
   return data;
 };
 
-// Find User by ID
 const findUserById = async (userId) => {
   const { data, error } = await supabase
     .from("users")
     .select("*")
     .eq("user_id", userId)
-    .single(); // `.single()` returns a single result or null
+    .single();
 
   if (error) {
     throw error;
@@ -58,7 +55,6 @@ const findUserById = async (userId) => {
   return data;
 };
 
-// Update User Profile
 const updateUserProfile = async (userId, updateData) => {
   const { data, error } = await supabase
     .from("users")

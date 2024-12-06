@@ -17,7 +17,7 @@ export const publishArticle = async (req, res) => {
   try {
     const article = await createArticle(
       title,
-      JSON.stringify(content), // Simpan sebagai JSON string
+      JSON.stringify(content),
       userId,
       tags
     );
@@ -48,11 +48,10 @@ export const uploadMedia = async (req, res) => {
 
     const filePath = `${articleId}/${uuidv4()}_${file.originalname}`;
 
-    // Upload ke Supabase storage menggunakan service_role key
     const { data, error } = await supabase.storage
       .from("media")
       .upload(filePath, file.buffer, {
-        upsert: true, // Optional: Ganti file jika sudah ada
+        upsert: true,
         contentType: file.mimetype,
       });
 
@@ -60,7 +59,6 @@ export const uploadMedia = async (req, res) => {
       throw new Error("Error uploading file: " + error.message);
     }
 
-    // Dapatkan URL publik
     const { data: publicUrlData, error: urlError } = supabase.storage
       .from("media")
       .getPublicUrl(filePath);
@@ -127,7 +125,6 @@ export const updateImageUrl = async (req, res) => {
   const { image_url } = req.body;
 
   try {
-    // Update image_url di artikel berdasarkan articleId
     const updatedArticle = await updateArticleImageUrl(articleId, image_url);
 
     if (!updatedArticle) {
@@ -142,14 +139,14 @@ export const updateImageUrl = async (req, res) => {
 };
 
 export const incrementViewsController = async (req, res) => {
-  const { articleId } = req.params; // Get article ID from the request parameters
+  const { articleId } = req.params;
 
   try {
-    const updatedArticle = await incrementViews(articleId); // Call the incrementViews function
+    const updatedArticle = await incrementViews(articleId);
 
     res.status(200).json({
       message: "Views updated successfully",
-      views: updatedArticle.views, // Return the updated views count
+      views: updatedArticle.views,
     });
   } catch (error) {
     console.error("Error updating views:", error);
@@ -158,10 +155,10 @@ export const incrementViewsController = async (req, res) => {
 };
 
 export const getArticlesByUserId = async (req, res) => {
-  const { userId } = req.params; // Ambil userId dari parameter
+  const { userId } = req.params;
 
   try {
-    const articles = await fetchArticlesByUserId(userId); // Ambil artikel berdasarkan userId
+    const articles = await fetchArticlesByUserId(userId);
 
     if (!articles || articles.length === 0) {
       return res
@@ -169,7 +166,7 @@ export const getArticlesByUserId = async (req, res) => {
         .json({ message: "No articles found for this user" });
     }
 
-    return res.status(200).json(articles); // Kembalikan data artikel
+    return res.status(200).json(articles);
   } catch (error) {
     console.error("Error fetching articles by user ID:", error);
     return res.status(500).json({ message: "Server error" });

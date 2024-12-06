@@ -72,7 +72,6 @@ const getUsernameById = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Kirimkan username dari user yang ditemukan
     res.json({ user });
   } catch (error) {
     console.error("Error fetching username:", error);
@@ -81,7 +80,7 @@ const getUsernameById = async (req, res) => {
 };
 
 const updateProfile = async (req, res) => {
-  const userId = req.params.userId; // Accessing userId from URL params
+  const userId = req.params.userId;
   console.log("userID: ", userId);
 
   try {
@@ -111,7 +110,6 @@ const updateProfile = async (req, res) => {
           .json({ message: "Error uploading file to Supabase" });
       }
 
-      // If file upload is successful, get the public URL
       const { data: urlData, error: urlError } = supabase.storage
         .from("media")
         .getPublicUrl(filePath);
@@ -121,7 +119,6 @@ const updateProfile = async (req, res) => {
         return res.status(500).json({ message: "Error getting public URL" });
       }
 
-      // Access the publicURL correctly
       console.log("publicURL: ", urlData);
 
       updateData.profile_picture = urlData;
