@@ -19,7 +19,11 @@ app.use(
 );
 
 // Tangani preflight request (OPTIONS)
-app.options("*", cors()); // Pastikan CORS menangani preflight request
+app.options("*", (req, res) => {
+  console.log("Preflight OPTIONS request received");
+  res.sendStatus(200); // Respond with 200 OK for preflight requests
+});
+// Pastikan CORS menangani preflight request
 
 app.use(express.json()); // Untuk parsing application/json
 
