@@ -8,19 +8,20 @@ dotenv.config();
 
 const app = express();
 
-// Middleware
+// Middleware untuk menangani CORS
 app.use(
   cors({
-    origin: "https://scribe-space-frotend.vercel.app",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
+    origin: "https://scribe-space-frontend.vercel.app", // Pastikan domain frontend benar
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Menyertakan OPTIONS dalam methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Menyertakan headers yang diperlukan
+    credentials: true, // Jika menggunakan cookies atau token dalam header
   })
 );
 
-app.options("*", cors()); // Menangani preflight request
+// Tangani preflight request (OPTIONS)
+app.options("*", cors()); // Pastikan CORS menangani preflight request
 
-app.use(express.json()); // For parsing application/json
+app.use(express.json()); // Untuk parsing application/json
 
 // Routes
 app.use("/api/users", userRoutes);
