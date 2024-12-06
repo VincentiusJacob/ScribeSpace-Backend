@@ -11,9 +11,14 @@ const app = express();
 // Middleware
 app.use(
   cors({
-    origin: "https://scribe-space-frotend.vercel.app/",
+    origin: "https://scribe-space-frotend.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
   })
 );
+
+app.options("*", cors()); // Menangani preflight request
 
 app.use(express.json()); // For parsing application/json
 
