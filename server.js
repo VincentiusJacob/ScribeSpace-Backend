@@ -643,6 +643,7 @@ app.get("/api/articles/user/:userId", async (req, res) => {
 app.get("/", (req, res) => {
   res.send("Welcome");
 });
+
 const port = process.env.PORT || 6543;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
