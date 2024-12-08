@@ -11,7 +11,9 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://scribe-space-frotend.vercel.app/",
+    origin: "https://scribe-space-frotend.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
