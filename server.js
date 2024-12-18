@@ -419,6 +419,26 @@ const updateArticleImageUrl = async (articleId, imageUrl) => {
   return data;
 };
 
+app.delete("/api/articles/:article_id", async (req, res) => {
+  const { article_id } = req.params;
+
+  try {
+    const { data, error } = await supabase
+      .from("articles")
+      .delete()
+      .eq("article_id", article_id);
+
+    if (error) {
+      return res.status(400).json({ error: error.message });
+    }
+
+    res.status(200).json({ message: "Article deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+});
+
 const incrementViews = async (articleId) => {
   const { data: article, error: fetchError } = await supabase
     .from("articles")
